@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="styles/main.css">
+<link rel="stylesheet" href="styles/form.css">
+<title>Log in</title>
+
+</head>
+<body>
+
+<div id="formContainer">
+  <form id="signupForm" action="/sign-in" method="POST">
+    <h1>Welcome back</h1>
+    <p class="subtitle">Log in to continue</p>
+
+    <div id="errorBanner">
+      <i class="ti ti-alert-circle"></i>
+      Invalid mail or password. Please try again.
+    </div>
+
+    <input id="mailInput"  type="name" name="name" placeholder="username" required>
+    <input id="passInput"  type="password" name="password" placeholder="Password" required>
+    <button type="submit">Log in</button>
+  </form>
+</div>
+
+<script src="scripts/loading.js" defer></script>
+</body>
+</html>
