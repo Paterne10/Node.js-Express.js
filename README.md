@@ -1,7 +1,7 @@
 # Node.js-Express.js-
 You can find here some fun projects that i built using node environnement with Express.js framework.
  How to run each projects ? 
-•	 Run npm -i command to install the node_modules 
+•	 Run npm -i command to install the node_modules
 •	 Lauch the local server with nodemon index.js .
 •	Open the browser and navigate to http://localhost:3000/
 
