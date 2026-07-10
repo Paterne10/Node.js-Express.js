@@ -1,11 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sortie — find your next thing to do</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    
+
+<div class="app">
+
+  <header class="header">
+    <div class="wordmark">sortie</div>
+    <div class="badge">prototype</div>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">Plan an outing</p>
+    <h1>What should<br>we do?</h1>
+    <p class="hero-sub">Pick a type of activity and how many of you there are — we'll match you with something worth doing.</p>
+  </section>
+
+  <!--
+    Plain HTML form — no JS needed to read the values.
+    On submit this posts type and people straight to /api/match.
+    Swap the action/method once you know the real route.
+  -->
+  <form class="app-form" action="/activity" method="POST">
+
+    <div class="field">
+      <p class="field-label">Activity type</p>
+      <div class="chips">
+
+        <input class="chip-input" type="radio" name="type" id="type-education" value="education" required>
+        <label class="chip chip--education" for="type-education">
+          <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4L2 9l10 5 10-5-10-5z"/><path d="M6 11.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/><path d="M22 9v6"/></svg>
+          education
+        </label>
+
+        <input class="chip-input" type="radio" name="type" id="type-recreational" value="recreational">
+        <label class="chip chip--recreational" for="type-recreational">
+          <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a5 5 0 015 5c0 3-2 5-3 6.5V16h-4v-1.5C8.5 13 6.5 11 6.5 8A5 5 0 0112 3z"/><path d="M11 16l-1 5h4l-1-5"/></svg>
+          Recreational
+        </label>
+
+        <input class="chip-input" type="radio" name="type" id="type-social" value="social">
+        <label class="chip chip--social" for="type-social">
+          <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.3"/><path d="M15 20c0-2.5 1.8-4.5 4-4.5"/></svg>
+          Social
+        </label>
+
+        <input class="chip-input" type="radio" name="type" id="type-charity" value="charity">
+        <label class="chip chip--charity" for="type-charity">
+          <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-9.3-8.6C1.2 8.4 2.6 5 6 5c2 0 3.3 1.1 4 2.2C10.7 6.1 12 5 14 5c3.4 0 4.8 3.4 3.3 6.4C19 15.6 12 20 12 20z"/></svg>
+          Charity
+        </label>
+
+        <input class="chip-input" type="radio" name="type" id="type-cooking" value="cooking">
+        <label class="chip chip--cooking" for="type-cooking">
+          <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="12" r="6"/><path d="M16 12h6"/></svg>
+          Cooking
+        </label>
+
+        <input class="chip-input" type="radio" name="type" id="type-relaxation" value="relaxation">
+        <label class="chip chip--relaxation" for="type-relaxation">
+          <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h13v4a5 5 0 01-5 5H9a5 5 0 01-5-5v-4z"/><path d="M17 11h2a2 2 0 010 4h-2"/><path d="M8 4c0 1-1 1-1 2M12 4c0 1-1 1-1 2"/></svg>
+          Relaxation
+        </label>
+
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="people">How many of you</label>
+      <div class="people-row">
+        <input class="people-input" type="number" name="people" id="people" min="1" max="20" value="2" required>
+        <span class="people-hint">between 1 and 20 people</span>
+      </div>
+    </div>
+
+    <div class="cta-block">
+      <button class="cta" type="submit">
+        Find us something
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+
+  </form>
+
+  <!-- Populated once results come back from the API -->
+  <% if (locals.content) { %>
+  <section class="result-wrap" id="resultWrap">
+    <div class="result-card">
+      <div class="result-top">
+        <div class="result-icon result-icon--cooking">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="12" r="6"/><path d="M16 12h6"/></svg>
+        </div>
+        <h3 class="result-name"><%= content.activity%></h3>
+      </div>
+      <p class="result-desc">Buy the wrappers, argue about the filling ratio, eat the evidence.</p>
+      <div class="result-tags">
+        <span class="tag">2 hrs</span>
+        <span class="tag">Low energy</span>
+        <span class="tag">2–8 people</span>
+      </div>
+      <button class="again" id="againBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0114-5.3M20 12a8 8 0 01-14 5.3M4 4v5h5M20 20v-5h-5"/></svg>
+        Try another
+      </button>
+    </div>
+  </section>
+<% } %>
+  <!-- <section class="result-wrap" id="resultWrap"></section> -->
+
+  <footer class="footer">front-end prototype · matching data comes from the API</footer>
+
+</div>
+
 </body>
 </html>
