@@ -10,14 +10,12 @@ app.get("/", async (req, res) => {
     try{
         const randomSecret = await axios.get(" https://secrets-api.appbrewery.com/random")
         res.render("index.ejs", {
-            secret: JSON.stringify(randomSecret.data.secret),
-            user: JSON.stringify(randomSecret.username)
+            secret: randomSecret.data.secret,
+            user: randomSecret.username
         })
-
-
     }
     catch(error){
-        res.render("index.ejs", {secret: JSON.stringify(error.message)})
+        res.status(500)
     }
     
 })
